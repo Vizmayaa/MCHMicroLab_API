@@ -17,7 +17,6 @@ namespace VEZTA.Controllers
             ReportListData res = new ReportListData();
             try
             {
-                // Call DAL to get data
                 Report_DAL dbhandle = new Report_DAL();
                 res = dbhandle.GetReportInitData();
                 res.flag = 1;
