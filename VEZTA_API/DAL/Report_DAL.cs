@@ -181,6 +181,7 @@ namespace VEZTA.DAL
                 cmd.Parameters.AddWithValue("@PREPARED_BY", report.PREPARED_BY);
                 cmd.Parameters.AddWithValue("@APPROVED_BY", report.APPROVED_BY);
                 cmd.Parameters.AddWithValue("@LAB_ID", report.LAB_ID);
+                cmd.Parameters.AddWithValue("@APPROVED_DATE", report.APPROVED_DATE);
 
                 DataTable tbl = new DataTable();
  
@@ -283,14 +284,16 @@ namespace VEZTA.DAL
                 "collection.COLLECTION_NO, collection.COLLECTION_TIME, collection.REFERENCE_NO, collection.PATIENT_NAME, " +
                 "collection.AGE, collection.SEX, collection.UNIT_NAME, collection.WARD, collection.DOCTOR_NAME, collection.UHID, " +
                 "collection.SPECIMEN, collection.INVESTIGATION_NAME, collection.DIAGNOSIS, hospital.HOSPITAL, " +
-                "remarks.REMARKS as REMARKS_NAME, report.REMARKS, report.LAB_ID, " +
-                "report.PREPARED_BY, TB_USERS.USER_NAME,report.APPROVED_BY,users.USER_NAME AS APPROVED_BY_NAME " +   
+                "remarks.REMARKS as REMARKS_NAME, report.REMARKS, collection.LAB_ID AS LABID, " +
+                "report.PREPARED_BY, TB_USERS.USER_NAME,report.APPROVED_BY,users.USER_NAME AS APPROVED_BY_NAME, " +
+                "CASE WHEN collection.NATURE_OF_SPECIMEN = 0 THEN collection.SPECIMEN ELSE TB_SPECIMEN_NATURE.SPECIMEN_NAME END AS SPECIMEN_NAME  " +   
                 "FROM TB_REPORT report " +
                 "LEFT JOIN TB_COLLECTION collection ON report.COLLECTION_ID = collection.ID " +
                 "LEFT JOIN TB_HOSPITAL hospital ON collection.HOSPITAL_ID = hospital.ID " +
                 "LEFT JOIN TB_REMARKS remarks ON report.REMARKS = remarks.ID " +
                 "LEFT JOIN TB_USERS ON report.PREPARED_BY = TB_USERS.USER_ID " +
                 "LEFT JOIN TB_USERS users ON report.APPROVED_BY = users.USER_ID " +
+                "LEFT JOIN TB_SPECIMEN_NATURE ON collection.NATURE_OF_SPECIMEN=TB_SPECIMEN_NATURE.ID " +
                 "WHERE report.ID = " + id;
 
                 DataTable tbl = ADO.GetDataTable(strSQL, "Report");
@@ -303,11 +306,11 @@ namespace VEZTA.DAL
                     {
                         ID = ADO.ToInt32(dr["ID"]),
                         COLLECTION_ID = ADO.ToInt32(dr["COLLECTION_ID"]),
-                        COLLECTION_NO = ADO.ToInt32(dr["COLLECTION_NO"]),
-                        COLLECTION_TIME = Convert.ToDateTime(dr["COLLECTION_TIME"]),
+                        COLLECTION_NO = ADO.ToString(dr["COLLECTION_NO"]),
+                        COLLECTION_TIME = dr["COLLECTION_TIME"] == DBNull.Value? (DateTime?)null: Convert.ToDateTime(dr["COLLECTION_TIME"]),
                         REFERENCE_NO = ADO.ToString(dr["REFERENCE_NO"]),
                         PATIENT_NAME = ADO.ToString(dr["PATIENT_NAME"]),
-                        AGE = ADO.ToInt32(dr["AGE"]),
+                        AGE = ADO.ToString(dr["AGE"]),
                         SEX = ADO.ToString(dr["SEX"]),
                         UNIT_NAME = ADO.ToString(dr["UNIT_NAME"]),
                         WARD = ADO.ToString(dr["WARD"]),
@@ -333,11 +336,13 @@ namespace VEZTA.DAL
                         ISOLATE3_COLONY_COUNT = ADO.ToString(dr["ISOLATE3_COLONY_COUNT"]),
                         IS_PRELIMINERY = ADO.Toboolean(dr["IS_PRILIMINARY"]),
                         IS_PUBLISHED = ADO.Toboolean(dr["IS_PUBLISHED"]),
-                        LAB_ID = ADO.ToString(dr["LAB_ID"]),
+                        LAB_ID = ADO.ToString(dr["LABID"]),
                         PREPARED_BY = ADO.ToInt32(dr["PREPARED_BY"]),
                         PREPARED_BY_NAME = ADO.ToString(dr["USER_NAME"]),
                         APPROVED_BY = ADO.ToInt32(dr["APPROVED_BY"]),
                         APPROVED_BY_NAME = ADO.ToString(dr["APPROVED_BY_NAME"]),
+                        APPROVED_DATE = dr["APPROVED_DATE"] == DBNull.Value? (DateTime?)null : Convert.ToDateTime(dr["APPROVED_DATE"]),
+                        NATURE_OF_SPECIMEN = ADO.ToString(dr["SPECIMEN_NAME"]),
                     };
                 }
 
@@ -455,6 +460,7 @@ namespace VEZTA.DAL
                 cmd.Parameters.AddWithValue("@PREPARED_BY", report.PREPARED_BY);
                 cmd.Parameters.AddWithValue("@APPROVED_BY", report.APPROVED_BY);
                 cmd.Parameters.AddWithValue("@LAB_ID", report.LAB_ID);
+                cmd.Parameters.AddWithValue("@APPROVED_DATE", report.APPROVED_DATE);
 
                 DataTable tbl = new DataTable();
 
@@ -543,6 +549,8 @@ namespace VEZTA.DAL
             }
             return res;
         }
+       
+
     }
 }
 

@@ -72,6 +72,9 @@ namespace VEZTA.DAL
 
                         cmd.Parameters.AddWithValue("@LOGIN_NAME", vLoginInput.LOGIN_NAME);
                         cmd.Parameters.AddWithValue("@PASSWORD", AzentLibrary.Library.EncryptString(vLoginInput.PASSWORD ?? ""));
+                        cmd.Parameters.AddWithValue("@COMPUTER_NAME", (object)vLoginInput.COMPUTER_NAME ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@DOMAIN_NAME", (object)vLoginInput.DOMAIN_NAME ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@INTERNET_IP", (object)vLoginInput.INTERNET_IP ?? DBNull.Value);
 
                         using (var reader = cmd.ExecuteReader())
                         {

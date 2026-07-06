@@ -11,17 +11,17 @@ namespace VEZTA.Models
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int ID { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int COLLECTION_NO { get; set; }
+        public string COLLECTION_NO { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime COLLECTION_DATE { get; set; }
+        public DateTime? COLLECTION_DATE { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime COLLECTION_TIME { get; set; }
+        public DateTime? COLLECTION_TIME { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string REFERENCE_NO { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string PATIENT_NAME { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int AGE { get; set; }
+        public string AGE { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string SEX { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -71,10 +71,13 @@ namespace VEZTA.Models
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string LAB_ID { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public int NATURE_OF_SPECIMEN { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string STATUS_NAME { get; set; }
         public string USER_NAME { get; set; }
         public string HOSPITAL_NAME { get; set; }
-       
+        public string NATURE_OF_SPECIMEN_NAME { get; set; }
+
     }
     public class CollectionInput
     {
@@ -96,12 +99,12 @@ namespace VEZTA.Models
     public class CollectionDownload
     {
         public int ID { get; set; }
-        public int COLLECTION_NO { get; set; } // Nullable DateTime
+        public string COLLECTION_NO { get; set; } // Nullable DateTime
         public DateTime COLLECTION_DATE { get; set; }   // Nullable DateTime
         public DateTime COLLECTION_TIME  { get; set; }
         public string REFERENCE_NO { get; set; }
         public string PATIENT_NAME { get; set; }
-        public int AGE { get; set; }
+        public string AGE { get; set; }
         public string SEX { get; set; }
         public int HOSPITAL_ID { get; set; }
         public int DEPT_ID { get; set; }
@@ -127,11 +130,11 @@ namespace VEZTA.Models
     public class PendingCollection
     {
         public int ID { get; set; }
-        public int COLLECTION_NO { get; set; }
-        public DateTime COLLECTION_DATE { get; set; }
+        public string COLLECTION_NO { get; set; }
+        public DateTime? COLLECTION_DATE { get; set; }
         public string REFERENCE_NO { get; set; }
         public string PATIENT_NAME { get; set; }
-        public int AGE { get; set; }
+        public string AGE { get; set; }
         public string SEX { get; set; }
         public string UNIT_NAME { get; set; }
         public string WARD { get; set; }
@@ -141,6 +144,8 @@ namespace VEZTA.Models
         public string DOCTOR_NAME { get; set; }
         public string HOSPITAL { get; set; }
         public string LAB_ID { get; set; }
+        public string NATURE_OF_SPECIMEN { get; set; }
+        public int NATURE_OF_SPECIMEN_ID { get; set; }
     }
 
     public class PendingCollectionResponse
@@ -179,6 +184,7 @@ namespace VEZTA.Models
         public List<Hospital> Hospitals { get; set; }
         public List<Sex> Sex { get; set; }
         public List<Investigation> investigations { get; set; }
+        public List<Natureofspecimen> Natureofspecimen { get; set; }
     }
     public class RefDoctor
     {
@@ -192,5 +198,9 @@ namespace VEZTA.Models
         public string Message { get; set; }
         public List<RefDoctor> Data { get; set; }
     }
-
+    public class Natureofspecimen
+    {
+        public int ID { get; set; }
+        public string NatureofSpecimen { get; set; }
+    }
 }

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data.SqlClient;
-using System.Configuration;
 
 namespace VEZTA.Controllers
 {
-    using Models;
     using DAL;
+    using Models;
+    using System.Data;
     using System.Web.Http.Cors;
 
     [RoutePrefix("api/collection")]
@@ -234,6 +235,24 @@ namespace VEZTA.Controllers
                 res.Message = ex.Message;
             }
 
+            return res;
+        }
+       
+        [HttpPost]
+        [Route("delete/{id:int}")]
+        public CollectionResponse DeleteCollection(int id)
+        {
+            CollectionResponse res = new CollectionResponse();
+            try
+            {
+                Collection_DAL dbhandle = new Collection_DAL();
+                res = dbhandle.DeleteCollection(id);
+            }
+            catch (Exception ex)
+            {
+                res.flag = 0;
+                res.Message = ex.Message;
+            }
             return res;
         }
 

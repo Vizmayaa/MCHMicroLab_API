@@ -34,7 +34,10 @@ namespace VEZTA.Models
     {
         public string LOGIN_NAME { get; set; }
         public string PASSWORD { get; set; }
-        
+        public string COMPUTER_NAME { get; set; }
+        public string DOMAIN_NAME { get; set; }
+        public string INTERNET_IP { get; set; }
+
     }
     public class UserLabInsertInput
     {

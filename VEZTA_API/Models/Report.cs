@@ -66,11 +66,11 @@ namespace VEZTA.Models
         public string Message { get; set; }
         public int ID { get; set; }
         public int COLLECTION_ID { get; set; }
-        public int COLLECTION_NO { get; set; }
-        public DateTime COLLECTION_TIME { get; set; }
+        public string COLLECTION_NO { get; set; }
+        public DateTime? COLLECTION_TIME { get; set; }
         public string REFERENCE_NO { get; set; }
         public string PATIENT_NAME { get; set; }
-        public int AGE { get; set; }
+        public string AGE { get; set; }
         public string SEX { get; set; }
         public string UNIT_NAME { get; set; }
         public string WARD { get; set; }
@@ -102,6 +102,8 @@ namespace VEZTA.Models
         public int APPROVED_BY { get; set; }
         public string PREPARED_BY_NAME { get; set; }
         public string APPROVED_BY_NAME { get; set; }
+        public DateTime? APPROVED_DATE { get; set; }
+        public string NATURE_OF_SPECIMEN { get; set; }
         public List <ReportEntry> ReportEntry { get; set; }
         public List <ReportGramStain> ReportGramStain { get; set; }
         public List <ReportWetFilm> ReportWetFilm { get; set; }
